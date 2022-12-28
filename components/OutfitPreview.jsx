@@ -1,17 +1,17 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 
 export default function OutfitPreview(props) {
   console.log(props.src);
   return (
-    <View style={styles.main}>
+    <TouchableOpacity style={styles.main} onPress={() => props.navigation.push("Outfit", { src: props.src })}>
       <Image source={{ uri: props.src }} style={styles.pic}></Image>
       <View style={styles.wrapper}>
         <AntDesign name="heart" size={20} color="#FF4079" />
         <Text style={styles.likes}>20</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

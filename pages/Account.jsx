@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import React from "react";
 import OutfitPreview from "../components/OutfitPreview";
 
@@ -27,12 +27,12 @@ export default function Account() {
         </View>
       </View>
       <Text style={styles.mostp}>Recent</Text>
-      <View style={styles.outfits}>
+      <ScrollView contentContainerStyle={styles.outfits}>
         <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
         <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" date="11/6/2022" />
         <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
         <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" date="11/6/2022" />
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -115,9 +115,8 @@ const styles = StyleSheet.create({
   },
   outfits: {
     padding: 0,
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#D7CDB7",
-
     flexWrap: "wrap",
     alignSelf: "stretch",
     flexDirection: "row",

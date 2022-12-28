@@ -3,7 +3,7 @@ import React from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 const win = Dimensions.get("window");
 // console.log(win);
-export default function Outfit() {
+export default function Outfit({ route, navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.topcont}>
@@ -14,11 +14,7 @@ export default function Outfit() {
         ></Image>
         <Text style={styles.acctext}>stellajun.2</Text>
       </View>
-      <Image
-        source={{ uri: "https://i.pinimg.com/564x/a8/03/5d/a8035dd0b25788d41cc3d2f00db7c06e.jpg" }}
-        resizeMode={"cover"}
-        style={styles.pic}
-      ></Image>
+      <Image source={{ uri: route.params.src }} resizeMode={"cover"} style={styles.pic}></Image>
       <View style={styles.social}>
         <FontAwesome5 name="heart" size={30} color="brown" />
         <FontAwesome5 name="bookmark" size={30} color="brown" />
