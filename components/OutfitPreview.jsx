@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
-
+import { useNavigation } from "@react-navigation/native";
 export default function OutfitPreview(props) {
-  console.log(props.src);
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.main} onPress={() => props.navigation.push("Outfit", { src: props.src })}>
+    <TouchableOpacity style={styles.main} onPress={() => navigation.push("Outfit", { src: props.src })}>
       <Image source={{ uri: props.src }} style={styles.pic}></Image>
       <View style={styles.wrapper}>
         <AntDesign name="heart" size={20} color="#FF4079" />
