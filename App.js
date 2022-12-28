@@ -1,25 +1,35 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
 import Account from "./pages/Account";
-import Home from "./pages/Home";
+import Explore from "./pages/Explore";
+import Outfit from "./pages/Outfit";
+import { NavigationContainer } from "@react-navigation/native";
 
+const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <View style={styles.container}>
-      <TopBar></TopBar>
-      <Home></Home>
-      {/* <Account /> */}
-      <BottomBar />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Explore" component={Explore} />
+          {/* <View style={styles.container}> */}
+          {/* <TopBar></TopBar>
+          <Explore></Explore> */}
+          {/* <Outfit></Outfit> */}
+          {/* <Account /> */}
+          {/* <BottomBar /> */}
+          {/* </View> */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "space-between",
     flex: 1,
-    backgroundColor: "#D7CDB7",
+    backgroundColor: "#e8e4d8",
   },
 });

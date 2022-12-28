@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import OutfitPreview from "../components/OutfitPreview";
 
-export default function Home() {
+export default function Explore() {
   return (
     <ScrollView contentContainerStyle={styles.main}>
       <OutfitPreview src="https://i.pinimg.com/750x/76/96/1c/76961cf9c0dd55e71d92f00367f4f80f.jpg" date="11/0/2022" />
@@ -25,7 +25,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   main: {
-    padding: 15,
+    padding: 10,
     // flex: 1,
     backgroundColor: "#D7CDB7",
     display: "flex",

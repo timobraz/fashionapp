@@ -21,9 +21,15 @@ export default function Account() {
           <Text style={styles.label}>Likes</Text>
           <Text style={styles.value}>50</Text>
         </View>
+        <View style={styles.slot}>
+          <Text style={styles.label}>Followers</Text>
+          <Text style={styles.value}>50</Text>
+        </View>
       </View>
-      <Text style={styles.mostp}>Most Popular</Text>
+      <Text style={styles.mostp}>Recent</Text>
       <View style={styles.outfits}>
+        <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
+        <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" date="11/6/2022" />
         <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
         <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" date="11/6/2022" />
       </View>
@@ -33,26 +39,22 @@ export default function Account() {
 
 const styles = StyleSheet.create({
   main: {
-    padding: 15,
+    padding: 10,
     flex: 1,
     backgroundColor: "#D7CDB7",
-    display: "flex",
     flexDirection: "column",
-    alignSelf: "stretch",
-    justifyContent: "flex-start",
     alignItems: "center",
   },
   pfp: {
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: 150,
-    height: 150,
+    width: 120,
+    aspectRatio: 1,
     backgroundColor: "#658CE7",
-    borderRadius: 75,
+    borderRadius: "60%",
     borderWidth: 3,
     borderColor: "white",
-    marginVertical: 20,
+    marginVertical: 5,
   },
   text: {
     fontSize: 40,
@@ -61,14 +63,14 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   name: {
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: "800",
     color: "#303030",
   },
   wrapper: {
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 15,
-    borderRadius: 15,
+    borderRadius: 10,
     backgroundColor: "#e8e4d8",
     borderColor: "white",
     borderWidth: 2,
@@ -77,14 +79,14 @@ const styles = StyleSheet.create({
   },
   username: {
     marginTop: 7,
-    fontSize: 21,
+    fontSize: 20,
     fontWeight: "500",
   },
   bottom: {
     padding: 10,
-    display: "flex",
+
     flexDirection: "row",
-    borderRadius: 15,
+    borderRadius: 10,
     backgroundColor: "#e8e4d8",
     borderColor: "white",
     borderWidth: 2,
@@ -92,13 +94,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   slot: {
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 15,
   },
   label: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "900",
   },
   value: {
@@ -106,17 +107,17 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   mostp: {
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: "800",
     alignSelf: "flex-start",
     marginHorizontal: 7,
     marginTop: 10,
   },
   outfits: {
-    padding: 7,
+    padding: 0,
     flex: 1,
     backgroundColor: "#D7CDB7",
-    display: "flex",
+
     flexWrap: "wrap",
     alignSelf: "stretch",
     flexDirection: "row",

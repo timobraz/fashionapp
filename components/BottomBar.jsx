@@ -11,7 +11,7 @@ export default function BottomBar() {
 
 const styles = StyleSheet.create({
   main: {
-    padding: 15,
+    padding: 5,
     alignSelf: "stretch",
     backgroundColor: "#e8e4d8",
     display: "flex",
