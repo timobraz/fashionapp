@@ -31,15 +31,16 @@ export default function Outfit({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#e8e4d8",
     flex: 1,
   },
   pfp: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     marginHorizontal: 2,
     borderRadius: "50%",
     borderColor: "#7d7d7d",
-    borderWidth: 2,
+    borderWidth: 1,
   },
   pic: {
     aspectRatio: 1,

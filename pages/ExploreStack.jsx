@@ -4,11 +4,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Explore from "./Explore";
 import Outfit from "./Outfit";
 import { AntDesign, Feather, Octicons, Entypo } from "@expo/vector-icons";
-import { useNavigation, StackActions } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
-export default function ExploreStack({}) {
-  const navigation = useNavigation();
+export default function ExploreStack({ navigation }) {
   return (
     <Stack.Navigator initialRouteName="Exlore">
       <Stack.Screen
@@ -17,7 +16,9 @@ export default function ExploreStack({}) {
         options={{
           header: () => (
             <View style={styles.main1}>
-              <Octicons name="diff-added" size={35} color="black" />
+              <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+                <Octicons name="diff-added" size={35} color="black" />
+              </TouchableOpacity>
             </View>
           ),
         }}
@@ -28,14 +29,14 @@ export default function ExploreStack({}) {
         options={{
           header: () => (
             <View style={styles.main}>
-              <TouchableOpacity onPress={() => navigation.dispatch(StackActions.pop())}>
+              <TouchableOpacity onPress={() => navigation.navigate("Explore")}>
                 <Entypo name="back" size={35} color="black" />
               </TouchableOpacity>
               <View style={styles.right}>
-                <TouchableOpacity onPress={() => navigation.dispatch(StackActions.pop())}>
+                <TouchableOpacity onPress={() => navigation.navigate("Explore")}>
                   <Feather name="flag" size={35} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.dispatch(StackActions.pop())}>
+                <TouchableOpacity onPress={() => navigation.navigate("Account")}>
                   <AntDesign name="tagso" size={35} color="black" />
                 </TouchableOpacity>
               </View>
@@ -49,7 +50,7 @@ export default function ExploreStack({}) {
 // options={({ route }) => ({ title: route.params.src })}
 //  headerStyle: {
 //           backgroundColor: "#e8e4d8",
-//           borderBottomColor: "#949460",
+//           borderBottomColor: "#C5BA9B",
 //           borderBottomWidth: 2,
 //           flexDirection: "row",
 //           alignItems: "center",
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e8e4d8",
     paddingBottom: 7,
     paddingHorizontal: 20,
-    borderBottomColor: "#949460",
+    borderBottomColor: "#C5BA9B",
     borderBottomWidth: 2,
     flexDirection: "row",
     alignItems: "center",
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e8e4d8",
     paddingBottom: 7,
     paddingHorizontal: 20,
-    borderBottomColor: "#949460",
+    borderBottomColor: "#C5BA9B",
     borderBottomWidth: 2,
     flexDirection: "row",
     alignItems: "center",
@@ -87,6 +88,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     width: 90,
-    // backgroundColor: "red",
   },
 });
