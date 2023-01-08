@@ -47,19 +47,7 @@ export default function ExploreStack({ navigation }) {
     </Stack.Navigator>
   );
 }
-// options={({ route }) => ({ title: route.params.src })}
-//  headerStyle: {
-//           backgroundColor: "#e8e4d8",
-//           borderBottomColor: "#C5BA9B",
-//           borderBottomWidth: 2,
-//           flexDirection: "row",
-//           alignItems: "center",
-//           justifyContent: "space-between",
-//         },
-//         headerTintColor: "black",
-//         headerTitleStyle: {
-//           fontWeight: "bold",
-//         },
+
 const styles = StyleSheet.create({
   main: {
     backgroundColor: "#e8e4d8",

@@ -1,13 +1,41 @@
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import React from "react";
 import OutfitPreview from "../components/OutfitPreview";
+import useAuth from "../hooks/useAuth";
+import axios from "../hooks/useAxios";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Account() {
+  const { user } = useAuth();
+  const [posts, setPosts] = useState([]);
+  async function getPosts() {
+    try {
+      const resp = await axios.post("/users/posts", {
+        username,
+        password,
+      });
+      console.log(resp.data);
+      if (resp.data) {
+        setError("");
+        setUser(resp.data);
+        storeData("user", JSON.stringify(resp.data));
+        navigation.navigate("Normal");
+      }
+    } catch (err) {
+      console.log(err.response.data.message);
+      setError(err.response.data.message);
+    }
+  }
+
+  useEffect(() => {
+    getPosts();
+  }, []);
   return (
     <View style={styles.main}>
       <View style={styles.wrapper}>
-        <Text style={styles.name}>Timofey Obraztsov</Text>
-        <Text style={styles.username}>@tim.obr</Text>
+        {/* <Text style={styles.name}>{}</Text> */}
+        <Text style={styles.username}>@{user.username}</Text>
       </View>
       <View style={styles.pfp}>
         <Text style={styles.text}>TO</Text>
@@ -26,12 +54,15 @@ export default function Account() {
           <Text style={styles.value}>50</Text>
         </View>
       </View>
-      <Text style={styles.mostp}>Recent</Text>
+      {posts.length > 0 && <Text style={styles.mostp}>Recent Posts</Text>}
       <ScrollView contentContainerStyle={styles.outfits}>
-        <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
-        <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" date="11/6/2022" />
-        <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
-        <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" date="11/6/2022" />
+        {posts.map((post) => {
+          return <OutfitPreview src={post.b64} likes={post.likes} />;
+        })}
+        {/* <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" />
+        <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" />
+        <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" />
+        <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" /> */}
       </ScrollView>
     </View>
   );
@@ -78,9 +109,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   username: {
-    marginTop: 7,
-    fontSize: 20,
+    // marginTop: 7,
+    fontSize: 22,
     fontWeight: "500",
+    // backgroundColor:
   },
   bottom: {
     padding: 10,

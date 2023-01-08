@@ -9,7 +9,7 @@ export default function OutfitPreview(props) {
       <Image source={{ uri: props.src }} style={styles.pic}></Image>
       <View style={styles.wrapper}>
         <AntDesign name="heart" size={20} color="#FF4079" />
-        <Text style={styles.likes}>20</Text>
+        <Text style={styles.likes}>{props.likes}</Text>
       </View>
     </TouchableOpacity>
   );
