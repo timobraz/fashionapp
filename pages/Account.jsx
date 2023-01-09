@@ -9,9 +9,9 @@ import { useState } from "react";
 export default function Account() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-  async function getPosts() {
+  async function getInfo() {
     try {
-      const resp = await axios.post("/users/posts", {
+      const resp = await axios.get("/users/", {
         username,
         password,
       });
