@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackActions } from "@react-navigation/native";
-import { AntDesign, Feather, Octicons, Entypo } from "@expo/vector-icons";
+import { AntDesign, Feather, Octicons, Entypo, Ionicons } from "@expo/vector-icons";
 import UploadImage from "./UploadImage";
 import Outfit from "./Outfit";
 import Account from "./Account";
@@ -36,7 +36,7 @@ export default function AccountStack({ navigation }) {
         options={{
           header: () => (
             <View style={styles.main}>
-              <TouchableOpacity onPress={() => navigation.dispatch(StackActions.pop())}>
+              <TouchableOpacity onPress={() => navigation.navigate("Account")}>
                 <Entypo name="back" size={35} color="black" />
               </TouchableOpacity>
             </View>
@@ -64,7 +64,7 @@ export default function AccountStack({ navigation }) {
           header: () => (
             <View style={styles.main}>
               <TouchableOpacity onPress={() => navigation.navigate("Account")}>
-                <Entypo name="back" size={35} color="black" />
+                <Ionicons name="md-close-outline" size={35} color="black" />
               </TouchableOpacity>
               <View style={styles.right}>
                 <TouchableOpacity onPress={() => navigation.dispatch(StackActions.pop())}>

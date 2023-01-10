@@ -35,7 +35,7 @@ const getAllKeys = async () => {
     }
   } catch (e) {}
 };
-// AsyncStorage.removeItem("user");
+AsyncStorage.removeItem("user");
 const useStorage = () => {
   return { storeData, getData, mergeData, removeData, getAllKeys };
 };

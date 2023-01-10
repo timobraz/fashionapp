@@ -10,7 +10,7 @@ export default function Login({ navigation }) {
   const [error, setError] = useState("");
 
   const { storeData } = useStorage();
-  const { user, setUser } = useAuth();
+  const { user, setUser, setJwt } = useAuth();
   async function submit() {
     try {
       const resp = await axios.post("/users/signin", {
@@ -22,6 +22,8 @@ export default function Login({ navigation }) {
         setError("");
         setUser(resp.data);
         storeData("user", JSON.stringify(resp.data));
+        storeData("jwt", resp.headers.Authorization);
+        setJwt(resp.headers.Authorization);
         navigation.navigate("Normal");
       }
     } catch (err) {
@@ -56,11 +58,10 @@ export default function Login({ navigation }) {
           keyboardType="visible-password"
         />
       </View>
-      <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button} onPress={submit}>
-          <Text style={styles.buttontext}>Login</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.buttons} onPress={submit}>
+        <Text style={styles.buttontext}>Login</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.login} onPress={() => navigation.navigate("Register")}>
         <Text style={styles.logintext}>Don't have an account?</Text>
       </TouchableOpacity>

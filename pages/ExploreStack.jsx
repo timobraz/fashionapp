@@ -16,7 +16,16 @@ export default function ExploreStack({ navigation }) {
         options={{
           header: () => (
             <View style={styles.main1}>
-              <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Normal", {
+                    screen: "AccountStack",
+                    params: {
+                      screen: "Create",
+                    },
+                  })
+                }
+              >
                 <Octicons name="diff-added" size={35} color="black" />
               </TouchableOpacity>
             </View>

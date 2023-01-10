@@ -9,12 +9,12 @@ export const ContextProvider = (props) => {
   const { navigate } = useNavigation();
   const [user, setUser] = useState(null);
   const [settings, setSettings] = useState(null);
+  const [jwt, setJwt] = useState("");
 
   const { getData, storeData, clear } = useStorage();
   useEffect(() => {
     async function setUp() {
       const value = await getData("user");
-      console.log(value);
       const settings = await getData("settings");
       if (value) {
         setUser(JSON.parse(value));
@@ -24,8 +24,15 @@ export const ContextProvider = (props) => {
         setUser(null);
       }
       if (settings) setSettings(settings);
+      const jwtret = await getData("jwt");
+      if (jwtret) setJwt(jwtret);
+      else {
+        navigate("Register");
+        setUser(null);
+        setJwt("");
+      }
     }
     setUp();
   }, []);
-  return <AppContext.Provider value={{ user, setUser }}>{props.children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ user, setUser, jwt, setJwt }}>{props.children}</AppContext.Provider>;
 };

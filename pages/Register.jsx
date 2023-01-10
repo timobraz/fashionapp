@@ -11,7 +11,7 @@ export default function Register({ navigation }) {
   const [error, setError] = useState("");
 
   const { storeData } = useStorage();
-  const { user, setUser } = useAuth();
+  const { user, setUser, setJwt } = useAuth();
   async function submit() {
     try {
       const resp = await axios.post("/users", {
@@ -19,13 +19,17 @@ export default function Register({ navigation }) {
         password,
         email,
       });
-      console.log(resp.data);
+      console.log("data here", resp.data);
       if (resp.data) {
-        setUser(JSON.parse(resp.data));
+        setUser(resp.data);
         storeData("user", JSON.stringify(resp.data));
+        setError("");
+        storeData("jwt", resp.headers.Authorization);
+        setJwt(resp.headers.Authorization);
         navigation.navigate("Normal");
       }
     } catch (err) {
+      console.log("err here,", err);
       console.log(err.response.data.message);
       setError(err.response.data.message);
     }

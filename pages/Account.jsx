@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, Alert } from "react-native";
 import React from "react";
 import OutfitPreview from "../components/OutfitPreview";
 import useAuth from "../hooks/useAuth";
@@ -6,15 +6,14 @@ import axios from "../hooks/useAxios";
 import { useEffect } from "react";
 import { useState } from "react";
 
-export default function Account() {
-  const { user } = useAuth();
+export default function Account({ navigation }) {
+  const { user, jwt } = useAuth();
   const [posts, setPosts] = useState([]);
+
   async function getInfo() {
     try {
-      const resp = await axios.get("/users/", {
-        username,
-        password,
-      });
+      console.log(jwt);
+      const resp = await axios.get("/users/", { headers: { Authorization: jwt } });
       console.log(resp.data);
       if (resp.data) {
         setError("");
@@ -24,13 +23,14 @@ export default function Account() {
       }
     } catch (err) {
       console.log(err.response.data.message);
-      setError(err.response.data.message);
+      alert(err.response.data.message);
     }
   }
 
   useEffect(() => {
-    getPosts();
-  }, []);
+    console.log("shopwn");
+    getInfo();
+  }, [navigation]);
   return (
     <View style={styles.main}>
       <View style={styles.wrapper}>
