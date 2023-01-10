@@ -1,36 +1,31 @@
-import { View, Text, StyleSheet, Image, ScrollView, Alert } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from "react-native";
 import React from "react";
 import OutfitPreview from "../components/OutfitPreview";
-import useAuth from "../hooks/useAuth";
-import axios from "../hooks/useAxios";
+import useAxios from "../hooks/useAxios";
 import { useEffect } from "react";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
+const dim = Dimensions.get("window");
 
 export default function Account({ navigation }) {
+  const axios = useAxios();
   const { user, jwt } = useAuth();
   const [posts, setPosts] = useState([]);
-
-  async function getInfo() {
+  console.log(user);
+  async function getInfo(id) {
     try {
-      console.log(jwt);
-      const resp = await axios.get("/users/", { headers: { Authorization: jwt } });
-      console.log(resp.data);
-      if (resp.data) {
-        setError("");
-        setUser(resp.data);
-        storeData("user", JSON.stringify(resp.data));
-        navigation.navigate("Normal");
-      }
+      const resp = await axios.get(`/users/account/${id}`);
+      setPosts(resp.data.posts);
     } catch (err) {
-      console.log(err.response.data.message);
+      console.log("err acc");
       alert(err.response.data.message);
     }
   }
 
   useEffect(() => {
     console.log("shopwn");
-    getInfo();
-  }, [navigation]);
+    // getInfo(user.id);
+  }, []);
   return (
     <View style={styles.main}>
       <View style={styles.wrapper}>
@@ -56,8 +51,8 @@ export default function Account({ navigation }) {
       </View>
       {posts.length > 0 && <Text style={styles.mostp}>Recent Posts</Text>}
       <ScrollView contentContainerStyle={styles.outfits}>
-        {posts.map((post) => {
-          return <OutfitPreview src={post.b64} likes={post.likes} />;
+        {posts.slice(0, 6).map((post) => {
+          return <OutfitPreview src={post.b64} likes={post.likes} key={post._id} />;
         })}
         {/* <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" />
         <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" />
@@ -73,6 +68,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     backgroundColor: "#D7CDB7",
+    // backgroundColor: "blue",
     flexDirection: "column",
     alignItems: "center",
   },
@@ -148,9 +144,11 @@ const styles = StyleSheet.create({
   outfits: {
     padding: 0,
     // flex: 1,
+    minWidth: "100%",
     backgroundColor: "#D7CDB7",
+    // backgroundColor: "red",
     flexWrap: "wrap",
-    alignSelf: "stretch",
+    // alignSelf: "stretch",
     flexDirection: "row",
     justifyContent: "space-between",
   },

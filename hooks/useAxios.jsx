@@ -1,5 +1,16 @@
-import React from "react";
 import axios from "axios";
-export default axios.create({
-  baseURL: __DEV__ ? "http://localhost:3080/api" : "https://api.example.com/api",
-});
+import useAuth from "./useAuth";
+
+const useAxios = () => {
+  const { jwt } = useAuth();
+  return axios.create({
+    baseURL: __DEV__ ? "http://192.168.0.238:3080/api" : "https://api.example.com/api",
+    headers: {
+      authorization: jwt,
+    },
+  });
+};
+
+export default useAxios;
+//http://localhost:3080/api
+//http://192.168.0.238:19000/api

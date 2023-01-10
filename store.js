@@ -9,30 +9,31 @@ export const ContextProvider = (props) => {
   const { navigate } = useNavigation();
   const [user, setUser] = useState(null);
   const [settings, setSettings] = useState(null);
-  const [jwt, setJwt] = useState("");
+  const [jwt, setJwt] = useState(null);
 
   const { getData, storeData, clear } = useStorage();
   useEffect(() => {
-    async function setUp() {
-      const value = await getData("user");
-      const settings = await getData("settings");
-      if (value) {
-        setUser(JSON.parse(value));
-        navigate("Normal");
-      } else {
-        navigate("Register");
-        setUser(null);
-      }
-      if (settings) setSettings(settings);
-      const jwtret = await getData("jwt");
-      if (jwtret) setJwt(jwtret);
-      else {
-        navigate("Register");
-        setUser(null);
-        setJwt("");
+    async function isLoggedIn() {
+      try {
+        // const value = await getData("user");
+        // const settings = await getData("settings");
+        // if (value) {
+        //   setUser(JSON.parse(value));
+        //   navigate("Normal");
+        // } else {
+        //   navigate("Register");
+        //   setUser(null);
+        // }
+        // if (settings) setSettings(settings);
+        const jwtret = await getData("jwt");
+        setJwt(jwtret);
+        const userret = await getData("user");
+        setUser(JSON.parse(userret));
+      } catch (error) {
+        console.log("err: ", error);
       }
     }
-    setUp();
+    isLoggedIn();
   }, []);
   return <AppContext.Provider value={{ user, setUser, jwt, setJwt }}>{props.children}</AppContext.Provider>;
 };

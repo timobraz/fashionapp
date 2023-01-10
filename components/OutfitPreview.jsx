@@ -6,7 +6,7 @@ export default function OutfitPreview(props) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity style={styles.main} onPress={() => navigation.push("Outfit", { src: props.src })}>
-      <Image source={{ uri: props.src }} style={styles.pic}></Image>
+      <Image source={{ uri: `data:image/png;base64,${props.src}` }} style={styles.pic}></Image>
       <View style={styles.wrapper}>
         <AntDesign name="heart" size={20} color="#FF4079" />
         <Text style={styles.likes}>{props.likes}</Text>
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     bottom: 0,
+    justifyContent: "center",
     backgroundColor: "#979081",
     borderRadius: 10,
   },

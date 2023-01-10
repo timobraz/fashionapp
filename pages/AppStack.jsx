@@ -1,14 +1,12 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
-import Feed from "./pages/Feed";
-import ExploreStack from "./pages/ExploreStack";
-import AccountStack from "./pages/AccountStack";
-import Register from "./pages/Register";
+import Feed from "./Feed";
+import ExploreStack from "./ExploreStack";
+import AccountStack from "./AccountStack";
 const Tab = createBottomTabNavigator();
 
-export default function NormalTab() {
+export default function AppStack() {
   return (
     <Tab.Navigator
       initialRouteName="ExploreStack"

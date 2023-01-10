@@ -1,16 +1,16 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useState } from "react";
-import axios from "../hooks/useAxios";
+import useAxios from "../hooks/useAxios";
 import useStorage from "../hooks/useStorage";
 import useAuth from "../hooks/useAuth";
 export default function Login({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const axios = useAxios();
   const { storeData } = useStorage();
-  const { user, setUser, setJwt } = useAuth();
+  const { setJwt, setUser } = useAuth();
   async function submit() {
     try {
       const resp = await axios.post("/users/signin", {
@@ -19,12 +19,13 @@ export default function Login({ navigation }) {
       });
       console.log(resp.data);
       if (resp.data) {
+        console.log(resp.headers);
+        const authtoken = resp.headers.authorization;
         setError("");
-        setUser(resp.data);
+        storeData("jwt", authtoken);
+        setJwt(authtoken);
         storeData("user", JSON.stringify(resp.data));
-        storeData("jwt", resp.headers.Authorization);
-        setJwt(resp.headers.Authorization);
-        navigation.navigate("Normal");
+        setUser(resp.data);
       }
     } catch (err) {
       console.log(err.response.data.message);

@@ -1,25 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { Button, Image, View, text, Dimensions, StyleSheet, TouchableOpacity, TextInput, Text } from "react-native";
+import { Image, View, Dimensions, StyleSheet, TouchableOpacity, TextInput, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Feather } from "@expo/vector-icons";
+import useAxios from "../hooks/useAxios";
 const dim = Dimensions.get("window");
 
 export default function UploadImage({ navigation }) {
   const [image, setImage] = useState(null);
   const [desc, setDesc] = useState("");
+  const [b64, setB64] = useState("");
+  const axios = useAxios();
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 0.3,
-      base64: false,
+      quality: 0.1,
+      base64: true,
     });
     if (!result.canceled) {
-      console.log(result.assets[0]);
+      // console.log(result.assets[0]);
       setImage(result.assets[0].uri);
+      setB64(result.assets[0].base64);
     }
   };
+
+  async function handleSubmit() {
+    if (b64) {
+      const resp = await axios.post("/posts/", { b64, description: desc });
+      console.log(resp.data);
+      navigation.goBack();
+    }
+  }
   useEffect(() => {
     pickImage();
     return () => {
@@ -47,7 +59,7 @@ export default function UploadImage({ navigation }) {
           <TouchableOpacity style={[styles.buttonwrapper, { backgroundColor: "grey" }]} onPress={() => navigation.goBack()}>
             <Text style={styles.buttontext}>Cancel</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonwrapper} onPress={() => console.log(desc)}>
+          <TouchableOpacity style={styles.buttonwrapper} onPress={handleSubmit}>
             <Text style={styles.buttontext}>Upload</Text>
           </TouchableOpacity>
         </View>

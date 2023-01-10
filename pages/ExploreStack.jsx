@@ -18,11 +18,8 @@ export default function ExploreStack({ navigation }) {
             <View style={styles.main1}>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate("Normal", {
-                    screen: "AccountStack",
-                    params: {
-                      screen: "Create",
-                    },
+                  navigation.navigate("AccountStack", {
+                    screen: "Create",
                   })
                 }
               >
