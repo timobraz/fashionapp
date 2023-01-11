@@ -15,9 +15,12 @@ export default function Account({ navigation }) {
   async function getInfo(id) {
     try {
       const resp = await axios.get(`/users/account/${id}`);
+      // console.log("resp,", resp.data);
+
       setPosts(resp.data.posts);
     } catch (err) {
       console.log("err acc");
+      console.log(err.response.data);
       alert(err.response.data.message);
     }
   }
@@ -52,7 +55,7 @@ export default function Account({ navigation }) {
       {posts.length > 0 && <Text style={styles.mostp}>Recent Posts</Text>}
       <ScrollView contentContainerStyle={styles.outfits}>
         {posts.slice(0, 6).map((post) => {
-          return <OutfitPreview src={post.b64} likes={post.likedBy.length} key={post._id} _id={post._id} />;
+          return <OutfitPreview src={post.binaryBuffer} likes={post.likedBy.length} key={post._id} _id={post._id} />;
         })}
       </ScrollView>
     </View>

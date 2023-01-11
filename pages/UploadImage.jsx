@@ -15,7 +15,7 @@ export default function UploadImage({ navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 0.1,
+      quality: 0.05,
       base64: true,
     });
     if (!result.canceled) {

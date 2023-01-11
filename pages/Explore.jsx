@@ -24,7 +24,7 @@ export default function Explore() {
     <ScrollView contentContainerStyle={styles.main} style={{ backgroundColor: "#D7CDB7" }}>
       {posts &&
         posts.slice(0, 6).map((post) => {
-          return <OutfitPreview src={post.b64} likes={post.likedBy.length} key={post._id} _id={post._id} />;
+          return <OutfitPreview src={post.binaryBuffer} likes={post.likedBy.length} key={post._id} _id={post._id} />;
         })}
     </ScrollView>
   );
