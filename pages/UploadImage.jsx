@@ -19,7 +19,6 @@ export default function UploadImage({ navigation }) {
       base64: true,
     });
     if (!result.canceled) {
-      // console.log(result.assets[0]);
       setImage(result.assets[0].uri);
       setB64(result.assets[0].base64);
     }

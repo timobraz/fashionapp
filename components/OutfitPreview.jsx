@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function OutfitPreview(props) {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.main} onPress={() => navigation.push("Outfit", { src: props.src })}>
+    <TouchableOpacity style={styles.main} onPress={() => navigation.push("Outfit", { src: props.src, id: props._id, likes: props.likes })}>
       <Image source={{ uri: `data:image/png;base64,${props.src}` }} style={styles.pic}></Image>
       <View style={styles.wrapper}>
         <AntDesign name="heart" size={20} color="#FF4079" />

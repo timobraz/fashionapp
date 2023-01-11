@@ -1,22 +1,31 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import OutfitPreview from "../components/OutfitPreview";
+import useAxios from "../hooks/useAxios";
 
 export default function Explore() {
+  const axios = useAxios();
+
+  const [posts, setPosts] = useState("");
+  useEffect(() => {
+    async function getPosts() {
+      try {
+        const resp = await axios.get(`/posts/post/all`);
+        if (resp.data) {
+          setPosts(resp.data);
+        }
+      } catch (error) {
+        console.log("get err", error);
+      }
+    }
+    getPosts();
+  }, []);
   return (
     <ScrollView contentContainerStyle={styles.main} style={{ backgroundColor: "#D7CDB7" }}>
-      <OutfitPreview src="https://i.pinimg.com/564x/d2/6b/41/d26b4191294a8220fb9a067e56af8eb5.jpg" date="11/4/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/a8/03/5d/a8035dd0b25788d41cc3d2f00db7c06e.jpg" date="11/8/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/d2/6b/41/d26b4191294a8220fb9a067e56af8eb5.jpg" date="11/4/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/a8/03/5d/a8035dd0b25788d41cc3d2f00db7c06e.jpg" date="11/8/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/d2/6b/41/d26b4191294a8220fb9a067e56af8eb5.jpg" date="11/4/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/a8/03/5d/a8035dd0b25788d41cc3d2f00db7c06e.jpg" date="11/8/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/d2/6b/41/d26b4191294a8220fb9a067e56af8eb5.jpg" date="11/4/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/a8/03/5d/a8035dd0b25788d41cc3d2f00db7c06e.jpg" date="11/8/2022" />
-      <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" date="11/9/2022" />
+      {posts &&
+        posts.slice(0, 6).map((post) => {
+          return <OutfitPreview src={post.b64} likes={post.likedBy.length} key={post._id} _id={post._id} />;
+        })}
     </ScrollView>
   );
 }
@@ -24,7 +33,8 @@ export default function Explore() {
 const styles = StyleSheet.create({
   main: {
     padding: 10,
-    // flex: 1,
+    flex: 1,
+    minWidth: "100%",
     backgroundColor: "#e8e4d8",
     display: "flex",
     flexWrap: "wrap",

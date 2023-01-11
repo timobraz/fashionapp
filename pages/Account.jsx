@@ -24,7 +24,7 @@ export default function Account({ navigation }) {
 
   useEffect(() => {
     console.log("shopwn");
-    // getInfo(user.id);
+    getInfo(user.id);
   }, []);
   return (
     <View style={styles.main}>
@@ -52,12 +52,8 @@ export default function Account({ navigation }) {
       {posts.length > 0 && <Text style={styles.mostp}>Recent Posts</Text>}
       <ScrollView contentContainerStyle={styles.outfits}>
         {posts.slice(0, 6).map((post) => {
-          return <OutfitPreview src={post.b64} likes={post.likes} key={post._id} />;
+          return <OutfitPreview src={post.b64} likes={post.likedBy.length} key={post._id} _id={post._id} />;
         })}
-        {/* <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" />
-        <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" />
-        <OutfitPreview src="https://i.pinimg.com/564x/b1/55/a9/b155a9a6cdefe1a8722803c11612e3c0.jpg" />
-        <OutfitPreview src="https://i.pinimg.com/564x/14/6b/1a/146b1a115a770b6beccf853fd79233ae.jpg" /> */}
       </ScrollView>
     </View>
   );
@@ -145,6 +141,7 @@ const styles = StyleSheet.create({
     padding: 0,
     // flex: 1,
     minWidth: "100%",
+    maxWidth: "100%",
     backgroundColor: "#D7CDB7",
     // backgroundColor: "red",
     flexWrap: "wrap",

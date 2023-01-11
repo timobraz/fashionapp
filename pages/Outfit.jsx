@@ -1,9 +1,32 @@
 import { View, Text, Image, StyleSheet, Dimensions, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import useAxios from "../hooks/useAxios";
 const win = Dimensions.get("window");
-// console.log(win);
+
 export default function Outfit({ route, navigation }) {
+  const axios = useAxios();
+  const [desc, setDesc] = useState("");
+  const [likes, setLikes] = useState(0);
+  const [createdBy, setCreatedBy] = useState("");
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    async function getPost() {
+      try {
+        const resp = await axios.get(`/posts/post/${route.params.id}`);
+        if (resp.data) {
+          setDesc(resp.data.description);
+          setLikes(route.params.likes);
+          setCreatedBy(resp.data.createdBy.username);
+          setDate(new Date(resp.data.createdAt).toDateString());
+        }
+      } catch (error) {
+        console.log("get err", error);
+      }
+    }
+    getPost();
+  }, []);
   return (
     <ScrollView style={styles.container}>
       <View style={styles.topcont}>
@@ -12,18 +35,18 @@ export default function Outfit({ route, navigation }) {
           resizeMode={"cover"}
           style={styles.pfp}
         ></Image>
-        <Text style={styles.acctext}>stellajun.2</Text>
+        <Text style={styles.acctext}>{createdBy}</Text>
       </View>
-      <Image source={{ uri: route.params.src }} resizeMode={"cover"} style={styles.pic}></Image>
+      <Image source={{ uri: `data:image/png;base64,${route.params.src}` }} resizeMode={"cover"} style={styles.pic}></Image>
       <View style={styles.social}>
         <FontAwesome5 name="heart" size={30} color="brown" />
         <FontAwesome5 name="bookmark" size={30} color="brown" />
         <Ionicons name="share-outline" size={35} color="black" />
       </View>
       <View style={styles.bottomBox}>
-        <Text style={styles.likes}>50 likes</Text>
-        <Text style={styles.desc}>I bought this sweathsuirt adadjajbd Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque, quo.</Text>
-        <Text style={styles.date}>May 19 2022</Text>
+        <Text style={styles.likes}>{likes} likes</Text>
+        <Text style={styles.desc}>{desc}</Text>
+        <Text style={styles.date}>{date}</Text>
       </View>
     </ScrollView>
   );
