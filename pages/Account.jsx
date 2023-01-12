@@ -55,7 +55,7 @@ export default function Account({ navigation }) {
       {posts.length > 0 && <Text style={styles.mostp}>Recent Posts</Text>}
       <ScrollView contentContainerStyle={styles.outfits}>
         {posts.slice(0, 6).map((post) => {
-          return <OutfitPreview src={post.binaryBuffer} likes={post.likedBy.length} key={post._id} _id={post._id} />;
+          return <OutfitPreview src={post.s3location} likes={post.likedBy.length} key={post._id} _id={post._id} />;
         })}
       </ScrollView>
     </View>

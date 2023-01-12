@@ -10,7 +10,7 @@ export default function Outfit({ route, navigation }) {
   const [likes, setLikes] = useState(0);
   const [createdBy, setCreatedBy] = useState("");
   const [date, setDate] = useState("");
-
+  console.log("params:", route.params.src);
   useEffect(() => {
     async function getPost() {
       try {
@@ -37,7 +37,7 @@ export default function Outfit({ route, navigation }) {
         ></Image>
         <Text style={styles.acctext}>{createdBy}</Text>
       </View>
-      <Image source={{ uri: `data:image/png;base64,${route.params.src}` }} resizeMode={"cover"} style={styles.pic}></Image>
+      <Image source={{ uri: `https://ds1q8qo0jb22q.cloudfront.net/${route.params.src}` }} resizeMode={"cover"} style={styles.pic}></Image>
       <View style={styles.social}>
         <FontAwesome5 name="heart" size={30} color="brown" />
         <FontAwesome5 name="bookmark" size={30} color="brown" />
