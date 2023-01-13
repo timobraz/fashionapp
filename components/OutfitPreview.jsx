@@ -1,12 +1,18 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
 import React from "react";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import CachedImage from "expo-cached-image";
 export default function OutfitPreview(props) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity style={styles.main} onPress={() => navigation.push("Outfit", { src: props.src, id: props._id, likes: props.likes })}>
-      <Image source={{ uri: `https://ds1q8qo0jb22q.cloudfront.net/${props.src}` }} style={styles.pic}></Image>
+      <CachedImage
+        source={{ uri: `https://ds1q8qo0jb22q.cloudfront.net/${props.src}`, expiresIn: 86400 }}
+        cacheKey={`${props.src}-thumb`}
+        style={styles.pic}
+        placeholderContent={<View style={{ backgroundColor: "gray" }}></View>}
+      ></CachedImage>
       <View style={styles.wrapper}>
         <AntDesign name="heart" size={20} color="#FF4079" />
         <Text style={styles.likes}>{props.likes}</Text>

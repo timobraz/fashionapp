@@ -1,8 +1,11 @@
 import { View, Text, Image, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons, Feather } from "@expo/vector-icons";
 import useAxios from "../hooks/useAxios";
+import CachedImage from "expo-cached-image";
+import useAuth from "../hooks/useAuth";
+
 const win = Dimensions.get("window");
 
 export default function Outfit({ route, navigation }) {
@@ -11,8 +14,9 @@ export default function Outfit({ route, navigation }) {
   const [likes, setLikes] = useState(0);
   const [createdBy, setCreatedBy] = useState("");
   const [date, setDate] = useState("");
-  const [liked, setLiked] = useState(true);
-  const [saved, setSaved] = useState(true);
+  const [liked, setLiked] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     async function getPost() {
@@ -37,6 +41,17 @@ export default function Outfit({ route, navigation }) {
   async function handleSave() {
     setSaved((prev) => !prev);
   }
+
+  async function handleDelete() {
+    try {
+      const resp = await axios.delete(`/posts/post/${route.params.id}`);
+      if (resp.data) {
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.log("get err", error);
+    }
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.topcont}>
@@ -47,15 +62,25 @@ export default function Outfit({ route, navigation }) {
         ></Image>
         <Text style={styles.acctext}>{createdBy}</Text>
       </View>
-      <Image source={{ uri: `https://ds1q8qo0jb22q.cloudfront.net/${route.params.src}` }} resizeMode={"cover"} style={styles.pic}></Image>
+      <CachedImage
+        source={{ uri: `https://ds1q8qo0jb22q.cloudfront.net/${route.params.src}`, expiresIn: 86400 }}
+        resizeMode={"cover"}
+        style={styles.pic}
+        cacheKey={`${route.params.src}-thumb`}
+      ></CachedImage>
       <View style={styles.social}>
-        <TouchableOpacity onPress={handleLike}>
+        <TouchableOpacity onPress={handleLike} activeOpacity={0.7}>
           {liked ? <AntDesign name="heart" size={30} color="crimson" /> : <FontAwesome5 name="heart" size={30} color="brown" />}
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleSave}>
+        <TouchableOpacity onPress={handleSave} activeOpacity={0.7}>
           {saved ? <Ionicons name="bookmark" size={35} color="orange" /> : <Ionicons name="bookmark-outline" size={35} color="brown" />}
         </TouchableOpacity>
         <Ionicons name="share-outline" size={35} color="black" />
+        {user.username == createdBy && (
+          <TouchableOpacity onPress={handleDelete} activeOpacity={0.7}>
+            <Ionicons name="md-trash-outline" size={35} color="black" />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.bottomBox}>
         <Text style={styles.likes}>{likes} likes</Text>

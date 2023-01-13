@@ -28,7 +28,7 @@ export default function UploadImage({ navigation }) {
     if (b64) {
       const resp = await axios.post("/posts/", { b64, description: desc });
       console.log(resp.data);
-      navigation.goBack();
+      navigation.navigate("Account");
     }
   }
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function UploadImage({ navigation }) {
           <TextInput style={styles.input} onChangeText={setDesc} multiline={true} value={desc}></TextInput>
         </View>
         <View style={styles.buttons}>
-          <TouchableOpacity style={[styles.buttonwrapper, { backgroundColor: "grey" }]} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={[styles.buttonwrapper, { backgroundColor: "grey" }]} onPress={() => navigation.navigate("Account")}>
             <Text style={styles.buttontext}>Cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonwrapper} onPress={handleSubmit}>

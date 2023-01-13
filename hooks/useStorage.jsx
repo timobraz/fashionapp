@@ -35,8 +35,14 @@ const getAllKeys = async () => {
     }
   } catch (e) {}
 };
+
+const removeMultiple = async (keys) => {
+  try {
+    const value = await AsyncStorage.multiRemove(keys);
+  } catch (e) {}
+};
 // AsyncStorage.removeItem("jwt");
 const useStorage = () => {
-  return { storeData, getData, mergeData, removeData, getAllKeys };
+  return { storeData, getData, mergeData, removeData, getAllKeys, removeMultiple };
 };
 export default useStorage;

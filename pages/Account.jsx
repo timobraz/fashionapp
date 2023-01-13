@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions, RefreshControl } from "react-native";
+import React, { useCallback } from "react";
 import OutfitPreview from "../components/OutfitPreview";
 import useAxios from "../hooks/useAxios";
 import { useEffect } from "react";
@@ -11,26 +11,31 @@ export default function Account({ navigation }) {
   const axios = useAxios();
   const { user, jwt } = useAuth();
   const [posts, setPosts] = useState([]);
-  console.log(user);
+  const [refreshing, setRefreshing] = useState(false);
   async function getInfo(id) {
     try {
       const resp = await axios.get(`/users/account/${id}`);
-      // console.log("resp,", resp.data);
-
       setPosts(resp.data.posts);
     } catch (err) {
       console.log("err acc");
       console.log(err.response.data);
-      alert(err.response.data.message);
+      throw err;
     }
   }
-
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await getInfo(user.id);
+    setRefreshing(false);
+  };
   useEffect(() => {
-    console.log("shopwn");
     getInfo(user.id);
   }, []);
   return (
-    <ScrollView contentContainerStyle={styles.main}>
+    <ScrollView
+      contentContainerStyle={styles.main}
+      style={styles.bgscroll}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    >
       <View style={styles.wrapper}>
         {/* <Text style={styles.name}>{}</Text> */}
         <Text style={styles.username}>@{user.username}</Text>
@@ -66,11 +71,14 @@ export default function Account({ navigation }) {
 const styles = StyleSheet.create({
   main: {
     padding: 10,
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#D7CDB7",
     // backgroundColor: "blue",
     flexDirection: "column",
     alignItems: "center",
+  },
+  bgscroll: {
+    backgroundColor: "#D7CDB7",
   },
   pfp: {
     justifyContent: "center",

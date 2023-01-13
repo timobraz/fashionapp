@@ -3,7 +3,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Explore from "./Explore";
 import Outfit from "./Outfit";
-import { AntDesign, Feather, Octicons, Entypo } from "@expo/vector-icons";
+import { AntDesign, Feather, Octicons, Ionicons } from "@expo/vector-icons";
 import { StackActions } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
@@ -36,7 +36,7 @@ export default function ExploreStack({ navigation }) {
           header: () => (
             <View style={styles.main}>
               <TouchableOpacity onPress={() => navigation.navigate("Explore")}>
-                <Entypo name="back" size={35} color="black" />
+                <Ionicons name="arrow-back-outline" size={35} color="black" />
               </TouchableOpacity>
               <View style={styles.right}>
                 <TouchableOpacity onPress={() => navigation.navigate("Explore")}>

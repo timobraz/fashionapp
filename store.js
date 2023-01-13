@@ -11,20 +11,10 @@ export const ContextProvider = (props) => {
   const [settings, setSettings] = useState(null);
   const [jwt, setJwt] = useState(null);
 
-  const { getData, storeData, clear } = useStorage();
+  const { getData } = useStorage();
   useEffect(() => {
     async function isLoggedIn() {
       try {
-        // const value = await getData("user");
-        // const settings = await getData("settings");
-        // if (value) {
-        //   setUser(JSON.parse(value));
-        //   navigate("Normal");
-        // } else {
-        //   navigate("Register");
-        //   setUser(null);
-        // }
-        // if (settings) setSettings(settings);
         const jwtret = await getData("jwt");
         setJwt(jwtret);
         const userret = await getData("user");
