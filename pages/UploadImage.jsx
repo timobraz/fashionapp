@@ -36,6 +36,7 @@ export default function UploadImage({ navigation }) {
     return () => {
       setImage(null);
       setDesc("");
+      setB64("");
     };
   }, []);
   return (

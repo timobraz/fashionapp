@@ -1,5 +1,6 @@
-import { View, Text, Image, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import useAxios from "../hooks/useAxios";
 const win = Dimensions.get("window");
@@ -10,7 +11,9 @@ export default function Outfit({ route, navigation }) {
   const [likes, setLikes] = useState(0);
   const [createdBy, setCreatedBy] = useState("");
   const [date, setDate] = useState("");
-  console.log("params:", route.params.src);
+  const [liked, setLiked] = useState(true);
+  const [saved, setSaved] = useState(true);
+
   useEffect(() => {
     async function getPost() {
       try {
@@ -27,6 +30,13 @@ export default function Outfit({ route, navigation }) {
     }
     getPost();
   }, []);
+
+  async function handleLike() {
+    setLiked((prev) => !prev);
+  }
+  async function handleSave() {
+    setSaved((prev) => !prev);
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.topcont}>
@@ -39,8 +49,12 @@ export default function Outfit({ route, navigation }) {
       </View>
       <Image source={{ uri: `https://ds1q8qo0jb22q.cloudfront.net/${route.params.src}` }} resizeMode={"cover"} style={styles.pic}></Image>
       <View style={styles.social}>
-        <FontAwesome5 name="heart" size={30} color="brown" />
-        <FontAwesome5 name="bookmark" size={30} color="brown" />
+        <TouchableOpacity onPress={handleLike}>
+          {liked ? <AntDesign name="heart" size={30} color="crimson" /> : <FontAwesome5 name="heart" size={30} color="brown" />}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSave}>
+          {saved ? <Ionicons name="bookmark" size={35} color="orange" /> : <Ionicons name="bookmark-outline" size={35} color="brown" />}
+        </TouchableOpacity>
         <Ionicons name="share-outline" size={35} color="black" />
       </View>
       <View style={styles.bottomBox}>

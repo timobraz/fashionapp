@@ -30,7 +30,7 @@ export default function Account({ navigation }) {
     getInfo(user.id);
   }, []);
   return (
-    <View style={styles.main}>
+    <ScrollView contentContainerStyle={styles.main}>
       <View style={styles.wrapper}>
         {/* <Text style={styles.name}>{}</Text> */}
         <Text style={styles.username}>@{user.username}</Text>
@@ -52,13 +52,14 @@ export default function Account({ navigation }) {
           <Text style={styles.value}>50</Text>
         </View>
       </View>
+
       {posts.length > 0 && <Text style={styles.mostp}>Recent Posts</Text>}
-      <ScrollView contentContainerStyle={styles.outfits}>
+      <View style={styles.outfits}>
         {posts.slice(0, 6).map((post) => {
           return <OutfitPreview src={post.s3location} likes={post.likedBy.length} key={post._id} _id={post._id} />;
         })}
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 }
 
