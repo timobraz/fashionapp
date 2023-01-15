@@ -15,7 +15,7 @@ export default function OutfitPreview(props) {
       ></CachedImage>
       <View style={styles.wrapper}>
         <AntDesign name="heart" size={20} color="#FF4079" />
-        <Text style={styles.likes}>{props.likes}</Text>
+        <Text style={styles.likes}>{props.likes.length}</Text>
       </View>
     </TouchableOpacity>
   );

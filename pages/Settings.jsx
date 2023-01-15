@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList } from "react-native";
 import React from "react";
 import useStorage from "../hooks/useStorage";
 import useAuth from "../hooks/useAuth";

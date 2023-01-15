@@ -61,7 +61,7 @@ export default function Account({ navigation }) {
       {posts.length > 0 && <Text style={styles.mostp}>Recent Posts</Text>}
       <View style={styles.outfits}>
         {posts.slice(0, 6).map((post) => {
-          return <OutfitPreview src={post.s3location} likes={post.likedBy.length} key={post._id} _id={post._id} />;
+          return <OutfitPreview src={post.s3location} likes={post.likedBy} key={post._id} _id={post._id} />;
         })}
       </View>
     </ScrollView>
@@ -136,11 +136,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 20,
-    fontWeight: "900",
+    fontWeight: "700",
   },
   value: {
-    fontSize: 23,
-    fontWeight: "600",
+    fontSize: 20,
+    fontWeight: "500",
   },
   mostp: {
     fontSize: 23,

@@ -12,7 +12,6 @@ export default function Explore() {
     try {
       const resp = await axios.get(`/posts/post/all`);
       if (resp.data) {
-        console.log(resp.data.length);
         setPosts(resp.data);
       }
     } catch (error) {
@@ -37,7 +36,7 @@ export default function Explore() {
     >
       {posts &&
         posts.map((post) => {
-          return <OutfitPreview src={post.s3location} likes={post.likedBy.length} key={post._id} _id={post._id} />;
+          return <OutfitPreview src={post.s3location} likes={post.likedBy} key={post._id} _id={post._id} />;
         })}
     </ScrollView>
   );
@@ -59,6 +58,6 @@ const styles = StyleSheet.create({
     // height: "100%",
   },
   bgscroll: {
-    backgroundColor: "#D7CDB7",
+    backgroundColor: "#e8e4d8",
   },
 });

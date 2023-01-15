@@ -24,7 +24,9 @@ export default function Outfit({ route, navigation }) {
         const resp = await axios.get(`/posts/post/${route.params.id}`);
         if (resp.data) {
           setDesc(resp.data.description);
-          setLikes(route.params.likes);
+          setLikes(route.params.likes.length);
+          console.log(user, route.params.likes);
+          setLiked(route.params.likes.includes(user.id));
           setCreatedBy(resp.data.createdBy.username);
           setDate(new Date(resp.data.createdAt).toDateString());
         }
@@ -36,7 +38,29 @@ export default function Outfit({ route, navigation }) {
   }, []);
 
   async function handleLike() {
-    setLiked((prev) => !prev);
+    setLiked(true);
+    try {
+      const resp = await axios.put("posts/post/like/" + route.params.id);
+      if (resp) {
+        setLikes((prev) => prev + 1);
+      }
+    } catch (error) {
+      console.log("couldn't like", error.data);
+      setLiked(false);
+    }
+  }
+  async function handleUnlike() {
+    try {
+      setLiked(false);
+      const resp = await axios.put("posts/post/unlike/" + route.params.id);
+      if (resp) {
+        setLikes((prev) => prev - 1);
+      }
+    } catch (error) {
+      setLiked(true);
+
+      console.log("couldn't like", error.response.data);
+    }
   }
   async function handleSave() {
     setSaved((prev) => !prev);
@@ -69,7 +93,7 @@ export default function Outfit({ route, navigation }) {
         cacheKey={`${route.params.src}-thumb`}
       ></CachedImage>
       <View style={styles.social}>
-        <TouchableOpacity onPress={handleLike} activeOpacity={0.7}>
+        <TouchableOpacity onPress={!liked ? handleLike : handleUnlike} activeOpacity={0.7}>
           {liked ? <AntDesign name="heart" size={30} color="crimson" /> : <FontAwesome5 name="heart" size={30} color="brown" />}
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSave} activeOpacity={0.7}>
